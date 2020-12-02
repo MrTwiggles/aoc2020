@@ -9,7 +9,7 @@ namespace aoc2020
   {
     static void Main(string[] args)
     {
-      Day1();
+      Day2();
     }
 
 
@@ -55,6 +55,29 @@ namespace aoc2020
         }
         enum2 = inputs.GetEnumerator();
       }
+    }
+
+    static void Day2()
+    {
+      List<string> inputs = GetInputs("./inputs/day2");
+
+      int cntValid1 = 0, cntValid2 = 0;
+      foreach (string input in inputs)
+      {
+        int lower = int.Parse(input.Substring(0, input.IndexOf('-')));
+        int upper = int.Parse(input.Substring(input.IndexOf('-') + 1, 2));
+        char validityChar = input[input.IndexOf(' ') + 1];
+        string password = input[(input.LastIndexOf(' ') + 1)..];
+
+        // Part 1
+        int count = password.Count(c => c == validityChar);
+        if (count >= lower && count <= upper) cntValid1++;
+
+        // Part 2
+        if (password[lower - 1] == validityChar ^ password[upper - 1] == validityChar) cntValid2++;
+      }
+      Console.WriteLine(cntValid1);
+      Console.WriteLine(cntValid2);
     }
 
     static List<string> GetInputs(string path)
